@@ -1,4 +1,6 @@
 import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
@@ -11,56 +13,21 @@ const galleryItemsMarkup = createGalleryItemsMarkup(galleryItems);
 function createGalleryItemsMarkup(galleryItems) {
   return galleryItems
     .map(({ preview, original, description }) => {
-      return `<div class="gallery__item">
-      <a class="gallery__link" href="${original}">
-        <img
-          class="gallery__image"
-          src="${preview}"
-          data-source="${original}"
-          alt="${description}"
-        />
-      </a>
-    </div>`;
+      return `<li>
+                  <a  class="gallery__item" href="${original}" style="display:block"
+    class="gallery__image">
+                    <img class="gallery__image" src="${preview}" alt="${description}" />
+                  </a>
+              </li>`;
     })
     .join('');
 }
 
 galleryEl.insertAdjacentHTML('beforeend', galleryItemsMarkup);
-galleryEl.addEventListener('click', onClickGalleryItem);
 
-function onClickGalleryItem(event) {
-  if (event.target.nodeName !== 'IMG') {
-    return;
-  }
-  event.preventDefault();
+let gallery = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
-  const imgSrc = event.target.dataset.source;
-
-  showModal(imgSrc);
-}
-let instance;
-function showModal(imgSrc) {
-  instance = basicLightbox.create(
-    `<img src="${imgSrc}" style="display:block; height: 100vh">`,
-  );
-
-  instance.show(() => {
-    addEscListener();
-  });
-}
-
-function onEscClick(event) {
-  if (event.code === 'Escape') {
-    instance.close(() => {
-      removeEscListener();
-    });
-  }
-}
-
-function addEscListener() {
-  window.addEventListener('keydown', onEscClick);
-}
-
-function removeEscListener() {
-  window.removeEventListener('keydown', onEscClick);
-}
+gallery.on('show.simplelightbox', function () {});
