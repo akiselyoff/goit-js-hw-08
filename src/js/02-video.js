@@ -42,10 +42,3 @@ function getTimeFromLocalStorage() {
   }
 }
 
-// player.on('play', function () {
-//   console.log('start playing');
-// });
-
-// player.getVideoTitle().then(function (title) {
-//   console.log('title:', title);
-// });
