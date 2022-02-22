@@ -30,6 +30,7 @@ function handlerSubmit(event) {
   event.preventDefault();
 
   const formData = new FormData(form);
+
   formData.forEach((val, nameField) => {
     formObjData[nameField] = val;
   });
@@ -37,7 +38,10 @@ function handlerSubmit(event) {
   event.currentTarget.reset();
   localStorage.removeItem(keyStore);
 
-  if (formObjData.email && formObjData.message) {
-    console.log(formObjData);
-  }
+  if (!formObjData.email || !formObjData.message)
+    return alert('все поля должны быть заполнены! ');
+
+  // if (formObjData.email && formObjData.message) {
+  //   console.log(formObjData);
+  // }
 }
